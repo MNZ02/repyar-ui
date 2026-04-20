@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repyar — Jobs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #4F8EF7;
+  --accent-dim: rgba(79,142,247,0.1);
+  --accent-glow: rgba(79,142,247,0.2);
+  --green: #22D3A0;
+  --green-dim: rgba(34,211,160,0.1);
+  --amber: #F5A623;
+  --amber-dim: rgba(245,166,35,0.1);
+  --red: #F05252;
+  --red-dim: rgba(240,82,82,0.1);
+  --purple: #A78BFA;
+  --purple-dim: rgba(167,139,250,0.1);
+  --sidebar-w: 216px;
+  --r: 10px;
+  --r-lg: 14px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg: #0B0D12;
+  --bg-raised: #111420;
+  --bg-card: #161924;
+  --bg-hover: #1C2030;
+  --border: rgba(255,255,255,0.06);
+  --border-md: rgba(255,255,255,0.1);
+  --border-hi: rgba(255,255,255,0.16);
+  --text-1: #EDF0F5;
+  --text-2: #7B8599;
+  --text-3: #3A4055;
+}
+
+[data-theme="light"] {
+  --bg: #F8FAFC;
+  --bg-raised: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-hover: #F1F5F9;
+  --border: rgba(0,0,0,0.06);
+  --border-md: rgba(0,0,0,0.1);
+  --border-hi: rgba(0,0,0,0.16);
+  --text-1: #0F172A;
+  --text-2: #64748B;
+  --text-3: #94A3B8;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;transition: background-color 0.3s ease}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-1);font-size:13px;-webkit-font-smoothing:antialiased}
+
+/* Shell */
+.shell{display:grid;grid-template-columns:var(--sidebar-w) 1fr;height:100vh;overflow:hidden}
+
+/* Sidebar */
+.sidebar{background:var(--bg-raised);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition: var(--transition)}
+.logo{padding:20px 18px 16px;border-bottom:1px solid var(--border)}
+.logo-name{font-size:16px;font-weight:500;letter-spacing:-.3px}
+.logo-tag{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace;letter-spacing:.06em;margin-top:2px}
+.nav-section{padding:14px 0 4px}
+.nav-lbl{font-size:10px;color:var(--text-3);letter-spacing:.09em;text-transform:uppercase;padding:0 18px 6px;display:block}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 18px;font-size:12.5px;color:var(--text-2);cursor:pointer;transition:color .15s;position:relative;text-decoration:none}
+.nav-item:hover{color:var(--text-1)}
+.nav-item.active{color:var(--text-1)}
+.nav-item.active::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:2px;background:var(--accent);border-radius:0 2px 2px 0}
+.nav-icon{width:14px;height:14px;opacity:.45;flex-shrink:0}
+.nav-item.active .nav-icon{opacity:1}
+.sidebar-foot{margin-top:auto;border-top:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;gap:10px}
+.u-avatar{width:28px;height:28px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--accent);flex-shrink:0;font-family:'DM Mono',monospace}
+.u-name{font-size:12.5px}
+.u-role{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace}
+
+/* Main */
+.main{display:flex;flex-direction:column;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px;border-bottom:1px solid var(--border);background:var(--bg-raised);flex-shrink:0}
+.topbar-title{font-size:13.5px;font-weight:500}
+.topbar-date{font-size:11px;color:var(--text-2);font-family:'DM Mono',monospace}
+.topbar-r{display:flex;align-items:center;gap:8px}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:0 12px;height:32px;width:240px;transition:var(--transition)}
+.search-box:focus-within{border-color:var(--accent);background:var(--bg)}
+.search-box input{background:transparent;border:none;outline:none;color:var(--text-1);font-size:11.5px;width:100%;font-family:'DM Sans',sans-serif}
+.icon-btn{width:32px;height:32px;border-radius:var(--r);background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:var(--transition)}
+.icon-btn:hover{border-color:var(--border-md);background:var(--bg-hover)}
+
+/* Content */
+.content{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:18px}
+.content::-webkit-scrollbar{width:3px}
+.content::-webkit-scrollbar-thumb{background:var(--text-3);border-radius:2px}
+
+/* Page Header */
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.page-title{font-size:18px;font-weight:500;letter-spacing:-.4px}
+.page-actions{display:flex;gap:8px}
+.btn{padding:7px 14px;border-radius:var(--r);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;border:1px solid var(--border-md);background:var(--bg-card);color:var(--text-2);transition:all .15s;display:flex;align-items:center;gap:6px}
+.btn:hover{color:var(--text-1);border-color:var(--border-hi)}
+.btn.prim{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.prim:hover{opacity:.9}
+
+/* Filter Row */
+.filter-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.filter-btn{padding:6px 12px;border-radius:var(--r);font-size:11.5px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:6px;transition:var(--transition)}
+.filter-btn:hover, .filter-btn.active{border-color:var(--border-hi);color:var(--text-1);background:var(--bg-hover)}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+
+/* Kanban Board */
+.kanban-board{display:grid;grid-template-columns:repeat(4, 1fr);gap:16px;flex:1;min-height:0}
+.kanban-col{display:flex;flex-direction:column;background:var(--bg-raised);border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden}
+.k-head{padding:14px 16px;font-size:11px;text-transform:uppercase;font-weight:500;color:var(--text-2);letter-spacing:0.05em;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:var(--bg-card)}
+.k-count{background:var(--bg-hover);color:var(--text-1);padding:2px 8px;border-radius:12px;font-family:'DM Mono',monospace;font-size:10px;border:1px solid var(--border)}
+.k-cards{padding:12px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;flex:1}
+.k-cards::-webkit-scrollbar{width:3px}
+.k-cards::-webkit-scrollbar-thumb{background:var(--border-md);border-radius:2px}
+
+/* Job Card */
+.job-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:grab;transition:var(--transition);display:flex;flex-direction:column;gap:10px}
+.job-card:hover{border-color:var(--border-hi);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+.job-card:active{cursor:grabbing}
+.jc-top{display:flex;justify-content:space-between;align-items:flex-start}
+.jc-id{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-2)}
+.jc-title{font-size:13px;font-weight:500;margin-top:2px;line-height:1.3}
+.jc-plate{display:inline-flex;align-items:center;font-size:10px;font-family:'DM Mono',monospace;padding:2px 6px;border-radius:4px;background:var(--bg-hover);color:var(--text-2);border:1px solid var(--border)}
+.jc-prog-wrap{display:flex;align-items:center;gap:8px}
+.jc-prog{flex:1;height:3px;background:var(--bg-hover);border-radius:2px;overflow:hidden}
+.jc-prog-fill{height:100%;border-radius:2px}
+.jc-prog-txt{font-size:9px;font-family:'DM Mono',monospace;color:var(--text-2);width:24px}
+.jc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:2px}
+.jc-tech{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-2)}
+.tech-av{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500;font-family:'DM Mono',monospace;flex-shrink:0}
+.jc-due{font-size:10px;font-family:'DM Mono',monospace;color:var(--text-3)}
+
+.chip-urgent{background:var(--red-dim);color:var(--red);border:1px solid rgba(240,82,82,.2);font-size:9px;padding:2px 6px;border-radius:4px;font-family:'DM Mono',monospace}
+
+@keyframes dropIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.job-card{animation:dropIn .3s ease both}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-name">Repyar</div>
+    <div class="logo-tag">Business Portal · v2</div>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-lbl">Main</span>
+    <a href="repyar-dashboard-v2.html" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="repyar-fleet-v2.html" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="7" cy="4" rx="4" ry="2.5"/><path d="M3 4v6c0 1.4 1.8 2.5 4 2.5s4-1.1 4-2.5V4"/></svg>
+      Vehicles
+    </a>
+    <a href="repyar-jobs-v2.html" class="nav-item active">
+      <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 2.5h12M1 7h8M1 11.5h5"/></svg>
+      Jobs
+    </a>
+    <a href="repyar-quotations-v2.html" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="11" height="11" rx="2"/><path d="M4.5 7h5M4.5 9.5h3"/></svg>
+      Quotations
+    </a>
+    <a href="repyar-invoices-v2.html" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="11" height="11" rx="2"/><path d="M7 5v4M5 7h4"/></svg>
+      Invoices
+    </a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:20px">
+      <div>
+        <div class="topbar-title">Jobs</div>
+        <div class="topbar-date">Manage active repairs</div>
+      </div>
+      <div class="search-box">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4"><circle cx="6" cy="6" r="5"/><path d="M10 10l3 3"/></svg>
+        <input type="text" placeholder="Search job ID, mechanic...">
+      </div>
+    </div>
+    <div class="topbar-r">
+      <div class="icon-btn" id="theme-toggle" title="Toggle theme">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--text-2)" stroke-width="1.5" class="sun-icon"><circle cx="7" cy="7" r="3"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.8 2.8l.7.7M10.5 10.5l.7.7M2.8 11.2l.7-.7M10.5 3.5l.7-.7"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--text-2)" stroke-width="1.5" class="moon-icon" style="display:none"><path d="M11.5 8.5A5 5 0 1 1 5.5 2.5a5.5 5.5 0 1 0 6 6z"/></svg>
+      </div>
+      <div class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--text-2)" stroke-width="1.5"><circle cx="7" cy="5" r="2.5"/><path d="M2 12c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-head">
+      <div class="page-title">Service Board</div>
+      <div class="page-actions">
+        <button class="btn"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M7 2v10"/></svg> Schedule</button>
+        <button class="btn prim"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M7 2v10"/></svg> New Job</button>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active">All Technicians</button>
+      <button class="filter-btn">Rajan K.</button>
+      <button class="filter-btn">Arjun M.</button>
+      <button class="filter-btn">Sunil K.</button>
+    </div>
+
+    <div class="kanban-board" id="kanban">
+      <!-- Generated via JS -->
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const jobs = [
+  { id: 'JOB-2041', title: 'Engine overhaul', plate: 'DL1C 3344', col: 'in-progress', prog: 65, tech: 'RK', techName: 'Rajan K.', due: 'Tomorrow', c: 'var(--accent)' },
+  { id: 'JOB-2042', title: 'Transmission fluid flush', plate: 'KA05 AB 1234', col: 'todo', prog: 0, tech: 'VP', techName: 'Vijay P.', due: 'Apr 14', c: 'var(--text-3)' },
+  { id: 'JOB-2039', title: 'Brake inspection & pad replace', plate: 'MH12 9988', col: 'review', prog: 90, tech: 'AM', techName: 'Arjun M.', due: 'Today', c: 'var(--green)' },
+  { id: 'JOB-2037', title: 'AC & wheel alignment', plate: 'KA01 5566', col: 'in-progress', prog: 30, tech: 'SK', techName: 'Sunil K.', due: 'Apr 15', c: 'var(--amber)' },
+  { id: 'JOB-2033', title: 'Suspension rebuild', plate: 'TN09 7712', col: 'todo', prog: 45, tech: 'VP', techName: 'Vijay P.', due: 'Overdue', urgent: true, c: 'var(--red)' },
+  { id: 'JOB-2031', title: 'Routine full service', plate: 'DL01 G 4422', col: 'done', prog: 100, tech: 'RK', techName: 'Rajan K.', due: 'Done', c: 'var(--green)' },
+  { id: 'JOB-2028', title: 'Electrical diagnostics', plate: 'MH04 JK 5500', col: 'review', prog: 85, tech: 'SK', techName: 'Sunil K.', due: 'Today', c: 'var(--green)' }
+];
+
+const cols = [
+  { id: 'todo', title: 'To Do' },
+  { id: 'in-progress', title: 'In Progress' },
+  { id: 'review', title: 'Review & QA' },
+  { id: 'done', title: 'Done' }
+];
+
+function renderKanban() {
+  const board = document.getElementById('kanban');
+  board.innerHTML = cols.map(c => {
+    const colJobs = jobs.filter(j => j.col === c.id);
+    return `
+      <div class="kanban-col">
+        <div class="k-head">
+          ${c.title} <span class="k-count">${colJobs.length}</span>
+        </div>
+        <div class="k-cards">
+          ${colJobs.map((j, i) => `
+            <div class="job-card" style="animation-delay:${i*40}ms">
+              <div class="jc-top">
+                <div>
+                  <div class="jc-id">${j.id}</div>
+                  <div class="jc-title">${j.title}</div>
+                </div>
+                ${j.urgent ? `<span class="chip-urgent">Urgent</span>` : ''}
+              </div>
+              <div class="jc-plate">${j.plate}</div>
+              <div class="jc-prog-wrap">
+                <div class="jc-prog"><div class="jc-prog-fill" style="width:${j.prog}%; background:${j.c}"></div></div>
+                <div class="jc-prog-txt">${j.prog}%</div>
+              </div>
+              <div class="jc-foot">
+                <div class="jc-tech">
+                  <div class="tech-av" style="background:var(--bg-hover);border:1px solid var(--border);color:${j.c}">${j.tech}</div>
+                  ${j.techName}
+                </div>
+                <div class="jc-due" style="color:${j.urgent ? 'var(--red)' : 'var(--text-3)'}">${j.due}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Theme Logic ──
+const themeToggle = document.getElementById('theme-toggle');
+const sunIcon = themeToggle.querySelector('.sun-icon');
+const moonIcon = themeToggle.querySelector('.moon-icon');
+
+function getTheme() { return localStorage.getItem('repyar-theme') || 'dark'; }
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('repyar-theme', theme);
+  if (theme === 'light') { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; }
+  else { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; }
+}
+themeToggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+setTheme(getTheme());
+
+renderKanban();
+</script>
+</body>
+</html>
