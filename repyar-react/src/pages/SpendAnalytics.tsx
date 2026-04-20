@@ -22,8 +22,8 @@ export default function SpendAnalytics() {
   const chartData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
-      { label: 'Labour', data: [75, 82, 60, 95, 85, 90, 110, 80, 88, 105, 90, 120], backgroundColor: '#4F8EF7', borderRadius: 4 },
-      { label: 'Parts', data: [35, 45, 25, 50, 40, 45, 60, 35, 40, 55, 40, 65], backgroundColor: '#22D3A0', borderRadius: 4 },
+      { label: 'Labour', data: [170, 260, 195, 235, 210, 225, 245, 200, 218, 240, 185, 220], backgroundColor: '#4F8EF7', borderRadius: 4 },
+      { label: 'Parts', data: [60, 100, 82, 106, 90, 95, 115, 78, 88, 110, 75, 95], backgroundColor: '#22D3A0', borderRadius: 4 },
     ]
   }
 
@@ -59,24 +59,24 @@ export default function SpendAnalytics() {
 
       <div className="stats-row">
         <div className="stat-card">
-          <div className="stat-lbl">Total Spend</div>
-          <div className="stat-val">₹14.5L</div>
-          <div className="stat-sub" style={{ color: 'var(--red)' }}>↑ 12% vs last year</div>
+          <div className="stat-lbl">Total Spend (YTD)</div>
+          <div className="stat-val">₹15.8L</div>
+          <div className="stat-sub" style={{ color: 'var(--red)' }}>↑ 9% vs last year</div>
         </div>
         <div className="stat-card">
           <div className="stat-lbl">Labour Cost</div>
-          <div className="stat-val">₹8.9L</div>
-          <div className="stat-sub">61.3% of total</div>
+          <div className="stat-val">₹8.6L</div>
+          <div className="stat-sub">54.4% of total</div>
         </div>
         <div className="stat-card">
           <div className="stat-lbl">Parts & Materials</div>
-          <div className="stat-val">₹4.2L</div>
-          <div className="stat-sub">28.9% of total</div>
+          <div className="stat-val">₹3.5L</div>
+          <div className="stat-sub">22.2% of total</div>
         </div>
         <div className="stat-card">
           <div className="stat-lbl">Cost Per Vehicle</div>
-          <div className="stat-val">₹30K</div>
-          <div className="stat-sub" style={{ color: 'var(--green)' }}>↓ 5% vs last year</div>
+          <div className="stat-val">₹33K</div>
+          <div className="stat-sub" style={{ color: 'var(--red)' }}>↑ 4% vs last year</div>
         </div>
       </div>
 

@@ -49,12 +49,15 @@ const navAnalytics = [
 ]
 
 const pageTitle: Record<string, { title: string; sub: string }> = {
-  '/dashboard': { title: 'Dashboard', sub: 'April 18, 2026' },
+  '/dashboard': { title: 'Dashboard', sub: 'April 20, 2026' },
   '/fleet': { title: 'Vehicles', sub: 'Manage your fleet' },
   '/jobs': { title: 'Jobs', sub: 'Manage active repairs' },
   '/quotations': { title: 'Quotations', sub: 'Estimates and approvals' },
   '/invoices': { title: 'Invoices', sub: 'Billing and payments' },
   '/spend-analytics': { title: 'Spend Analytics', sub: 'Financial insights' },
+  '/inspections': { title: 'Inspections', sub: 'Vehicle inspection reports' },
+  '/issues': { title: 'Issues & Alerts', sub: 'Open issues across fleet' },
+  '/maintenance': { title: 'Maintenance', sub: 'Service schedules and renewals' },
   '/settings': { title: 'Settings', sub: 'Manage your preferences' },
 }
 

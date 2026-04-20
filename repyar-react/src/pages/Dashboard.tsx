@@ -54,8 +54,8 @@ export default function Dashboard() {
   }
 
   const fleetDonutData = {
-    labels: ['Operational', 'In Service', 'Flagged', 'Overdue'],
-    datasets: [{ data: [32, 10, 4, 2], backgroundColor: [C.green, C.accent, C.amber, C.red], borderColor: donutBorder, borderWidth: 2 }]
+    labels: ['Operational', 'In Service', 'Flagged'],
+    datasets: [{ data: [32, 10, 6], backgroundColor: [C.green, C.accent, C.amber], borderColor: donutBorder, borderWidth: 2 }]
   }
   const costDonutData = {
     labels: ['Labour', 'Parts', 'Misc'],
@@ -152,7 +152,7 @@ export default function Dashboard() {
             </div>
           </div>
           <div style={{ marginTop: 12 }}>
-            {[{ l: 'Operational', w: '66%', c: C.green, cls: 'c-g', n: 32 }, { l: 'In service', w: '20%', c: C.accent, cls: 'c-b', n: 10 }, { l: 'Flagged', w: '8%', c: C.amber, cls: 'c-a', n: 4 }, { l: 'Overdue', w: '4%', c: C.red, cls: 'c-r', n: 2 }].map(r => (
+            {[{ l: 'Operational', w: '66%', c: C.green, cls: 'c-g', n: 32 }, { l: 'In service', w: '20%', c: C.accent, cls: 'c-b', n: 10 }, { l: 'Flagged', w: '12%', c: C.amber, cls: 'c-a', n: 6 }].map(r => (
               <div className="fleet-row" key={r.l}>
                 <span className="fleet-lbl">{r.l}</span>
                 <div className="fleet-bar-wrap"><div className="fleet-track"><div className="fleet-fill" style={{ width: r.w, background: r.c }} /></div></div>
@@ -187,10 +187,10 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-head"><div className="card-title">Active jobs</div><span className="card-action">View all →</span></div>
           {[
-            { init: 'RK', bg: 'var(--accent-dim)', bc: 'rgba(79,142,247,.2)', tc: 'var(--accent)', name: 'Engine overhaul', status: 'In repair', scls: 'c-b', meta: 'JOB-2041 · DL1C 3344 · Rajan K.', prog: 65, pc: 'var(--accent)' },
-            { init: 'AM', bg: 'var(--green-dim)', bc: 'rgba(34,211,160,.2)', tc: 'var(--green)', name: 'Brake inspection', status: 'Review', scls: 'c-g', meta: 'JOB-2039 · MH12 9988 · Arjun M.', prog: 90, pc: 'var(--green)' },
-            { init: 'SK', bg: 'var(--amber-dim)', bc: 'rgba(245,166,35,.2)', tc: 'var(--amber)', name: 'AC & alignment', status: 'Waiting', scls: 'c-a', meta: 'JOB-2037 · KA01 5566 · Sunil K.', prog: 30, pc: 'var(--amber)' },
-            { init: 'VP', bg: 'var(--red-dim)', bc: 'rgba(240,82,82,.2)', tc: 'var(--red)', name: 'Suspension rebuild', status: 'Overdue', scls: 'c-r', meta: 'JOB-2033 · TN09 7712 · Vijay P.', prog: 45, pc: 'var(--red)' },
+            { init: 'RK', bg: 'var(--accent-dim)', bc: 'rgba(79,142,247,.2)', tc: 'var(--accent)', name: 'Engine overhaul', status: 'Stage 5 of 8', scls: 'c-b', meta: 'JOB-2041 · DL1C 3344 · Rajan Kumar', prog: 65, pc: 'var(--accent)' },
+            { init: 'AM', bg: 'var(--green-dim)', bc: 'rgba(34,211,160,.2)', tc: 'var(--green)', name: 'Brake inspection & pad replace', status: 'Stage 7 of 8', scls: 'c-g', meta: 'JOB-2039 · MH12 9988 · Arjun Mehta', prog: 90, pc: 'var(--green)' },
+            { init: 'SK', bg: 'var(--amber-dim)', bc: 'rgba(245,166,35,.2)', tc: 'var(--amber)', name: 'AC & wheel alignment', status: 'Stage 3 of 6', scls: 'c-a', meta: 'JOB-2037 · KA01 5566 · Sunil Kadam', prog: 30, pc: 'var(--amber)' },
+            { init: 'VP', bg: 'var(--red-dim)', bc: 'rgba(240,82,82,.2)', tc: 'var(--red)', name: 'Suspension rebuild', status: 'Flagged', scls: 'c-r', meta: 'JOB-2033 · TN09 7712 · Vijay Patil', prog: 20, pc: 'var(--red)' },
           ].map(j => (
             <div className="job-item" key={j.meta}>
               <div className="tech" style={{ background: j.bg, border: `1px solid ${j.bc}`, color: j.tc }}>{j.init}</div>
@@ -210,11 +210,11 @@ export default function Dashboard() {
             <span className="card-action">All →</span>
           </div>
           {[
-            { c: 'var(--red)', title: 'PUC expiry — KA05AB1234', meta: 'Overdue · 3 days', mc: 'var(--red)' },
+            { c: 'var(--red)', title: 'PUC expiry — KA05 AB 1234', meta: 'Overdue · 3 days', mc: 'var(--red)' },
             { c: 'var(--amber)', title: 'Insurance due — MH12 9988', meta: 'Due in 5 days', mc: 'var(--amber)' },
-            { c: 'var(--amber)', title: 'Quotation approval pending', meta: 'JOB-2041 · 2 days left' },
+            { c: 'var(--amber)', title: 'Q-0192 approval pending', meta: 'JOB-2041 · 2 days left' },
             { c: 'var(--accent)', title: 'Inspection report ready', meta: 'JOB-2039 · 1 hr ago' },
-            { c: 'var(--green)', title: 'JOB-2031 completed', meta: 'DL1C 3344 · 2 hrs ago' },
+            { c: 'var(--green)', title: 'JOB-2031 completed', meta: 'DL01 G 4422 · 2 hrs ago' },
           ].map((a, i) => (
             <div className="alert-item" key={i}>
               <div className="a-dot" style={{ background: a.c }} />
@@ -229,9 +229,9 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-head"><div className="card-title">Pending quotations</div><span className="card-action">View all →</span></div>
           {[
-            { id: 'Q-0192', name: 'Suspension repair', amt: '₹28,400', sub: 'Valid 18 Apr · DL1C 3344' },
-            { id: 'Q-0189', name: 'Tyre set (4×)', amt: '₹14,800', sub: 'Valid 22 Apr · MH12 9988' },
-            { id: 'Q-0185', name: 'Full service', amt: '₹9,200', sub: 'Valid 30 Apr · KA01 5566' },
+            { id: 'Q-0192', name: 'Suspension repair', amt: '₹28,400', sub: 'Valid 25 Apr · DL1C 3344 · JOB-2041' },
+            { id: 'Q-0189', name: 'Tyre set (4×)', amt: '₹14,800', sub: 'Valid 28 Apr · MH12 9988 · JOB-2039' },
+            { id: 'Q-0185', name: 'Full service — Stage 2', amt: '₹9,200', sub: 'Valid 30 Apr · KA01 5566 · JOB-2037' },
           ].map(q => (
             <div className="q-item" key={q.id}>
               <div className="q-top"><span className="q-name">{q.id} — {q.name}</span><span className="q-amount">{q.amt}</span></div>
@@ -256,16 +256,16 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-head"><div className="card-title">Mechanic performance</div><span className="card-action">Details →</span></div>
           {[
-            { av: 'RK', name: 'Rajan Kumar', stars: '★★★★★', rating: 4.9, jobs: 24 },
-            { av: 'AM', name: 'Arjun Mehta', stars: '★★★★', rating: 4.6, jobs: 19 },
-            { av: 'SK', name: 'Sunil Kadam', stars: '★★★★', rating: 4.4, jobs: 17 },
-            { av: 'VP', name: 'Vijay Patil', stars: '★★★', rating: 3.8, jobs: 12 },
+            { av: 'RK', name: 'Rajan Kumar', rating: '4.9', jobs: '24' },
+            { av: 'AM', name: 'Arjun Mehta', rating: '4.6', jobs: '19' },
+            { av: 'SK', name: 'Sunil Kadam', rating: '4.4', jobs: '17' },
+            { av: 'VP', name: 'Vijay Patil', rating: '3.8', jobs: '12' },
           ].map(m => (
             <div className="mech-item" key={m.av}>
               <div className="mech-av">{m.av}</div>
               <div className="mech-info">
                 <div className="mech-name">{m.name}</div>
-                <div className="mech-stat"><span className="stars">{m.stars}</span> {m.rating}</div>
+                <div className="mech-stat">★ {m.rating}</div>
               </div>
               <div className="mech-jobs"><span style={{ color: 'var(--text-1)' }}>{m.jobs}</span> jobs</div>
             </div>
@@ -278,11 +278,11 @@ export default function Dashboard() {
             <span className="card-action">Full log →</span>
           </div>
           {[
-            { c: 'var(--green)', title: 'JOB-2031 marked complete', time: 'Today, 10:22 AM', last: false },
-            { c: 'var(--accent)', title: 'Inspection report uploaded — JOB-2039', time: 'Today, 09:45 AM', last: false },
-            { c: 'var(--amber)', title: 'Quotation Q-0192 sent for approval', time: 'Yesterday, 04:10 PM', last: false },
-            { c: 'var(--red)', title: 'PUC alert triggered — KA05AB1234', time: 'Yesterday, 08:00 AM', last: false },
-            { c: 'var(--text-3)', title: 'New vehicle added — DL1C 3344', time: 'Apr 9, 03:15 PM', last: true },
+            { c: 'var(--green)', title: 'JOB-2031 marked complete', time: 'Apr 20, 10:22 AM', last: false },
+            { c: 'var(--accent)', title: 'Inspection report uploaded — JOB-2039', time: 'Apr 20, 09:45 AM', last: false },
+            { c: 'var(--amber)', title: 'Q-0192 sent for approval', time: 'Apr 19, 04:10 PM', last: false },
+            { c: 'var(--red)', title: 'PUC alert triggered — KA05 AB 1234', time: 'Apr 19, 08:00 AM', last: false },
+            { c: 'var(--text-3)', title: 'Vehicle KA03 M 9001 added to fleet', time: 'Apr 9, 03:15 PM', last: true },
           ].map((t, i) => (
             <div className="timeline-item" key={i}>
               <div className="tl-dot-col">

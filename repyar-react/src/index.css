@@ -246,6 +246,7 @@ tr:hover td{background:var(--bg-hover);cursor:pointer}
 .s-pending{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,166,35,.2)}
 .s-approved{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,211,160,.2)}
 .s-rejected{background:var(--red-dim);color:var(--red);border:1px solid rgba(240,82,82,.2)}
+.s-draft{background:rgba(255,255,255,0.05);color:var(--text-2);border:1px solid var(--border)}
 
 .v-meta{font-size:11px;color:var(--text-2)}
 .action-dots{color:var(--text-3);cursor:pointer;padding:4px;font-size:16px;letter-spacing:2px}

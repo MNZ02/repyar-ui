@@ -1,21 +1,49 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-const quotes = [
-  { id: 'Q-0192', title: 'Suspension repair', plate: 'DL1C 3344', amt: '₹28,400', sent: 'Apr 10, 2026', valid: 'Apr 18, 2026', status: 'Pending' },
-  { id: 'Q-0189', title: 'Tyre set (4×)', plate: 'MH12 9988', amt: '₹14,800', sent: 'Apr 08, 2026', valid: 'Apr 22, 2026', status: 'Pending' },
-  { id: 'Q-0188', title: 'Transmission fluid flush', plate: 'KA05 AB 1234', amt: '₹6,500', sent: 'Apr 07, 2026', valid: 'Apr 14, 2026', status: 'Approved' },
-  { id: 'Q-0185', title: 'Full service', plate: 'KA01 5566', amt: '₹9,200', sent: 'Apr 05, 2026', valid: 'Apr 30, 2026', status: 'Pending' },
-  { id: 'Q-0182', title: 'Engine overhaul (Stage 1)', plate: 'TN09 7712', amt: '₹85,000', sent: 'Apr 02, 2026', valid: 'Apr 12, 2026', status: 'Rejected' },
-  { id: 'Q-0180', title: 'Brake pad replacement', plate: 'DL01 G 4422', amt: '₹4,200', sent: 'Mar 28, 2026', valid: 'Apr 05, 2026', status: 'Approved' },
+type QuotationDisplayStatus = 'pending' | 'approved' | 'rejected' | 'draft'
+
+interface QuotationSummary {
+  quotationNumber: string
+  title: string
+  vehicleReg: string
+  jobCode: string
+  totalAmount: number
+  createdAt: string
+  validUntil: string | null
+  status: QuotationDisplayStatus
+}
+
+const quotes: QuotationSummary[] = [
+  { quotationNumber: 'Q-0192', title: 'Suspension repair', vehicleReg: 'DL1C 3344', jobCode: 'JOB-2041', totalAmount: 2840000, createdAt: 'Apr 10, 2026', validUntil: 'Apr 25, 2026', status: 'pending' },
+  { quotationNumber: 'Q-0189', title: 'Tyre set (4×)', vehicleReg: 'MH12 9988', jobCode: 'JOB-2039', totalAmount: 1480000, createdAt: 'Apr 08, 2026', validUntil: 'Apr 28, 2026', status: 'pending' },
+  { quotationNumber: 'Q-0188', title: 'Transmission fluid flush', vehicleReg: 'KA05 AB 1234', jobCode: 'JOB-2042', totalAmount: 650000, createdAt: 'Apr 07, 2026', validUntil: 'Apr 21, 2026', status: 'approved' },
+  { quotationNumber: 'Q-0185', title: 'Full service — Stage 2', vehicleReg: 'KA01 5566', jobCode: 'JOB-2037', totalAmount: 920000, createdAt: 'Apr 05, 2026', validUntil: 'Apr 30, 2026', status: 'pending' },
+  { quotationNumber: 'Q-0182', title: 'Engine overhaul — Stage 1', vehicleReg: 'TN09 7712', jobCode: 'JOB-2033', totalAmount: 8500000, createdAt: 'Apr 02, 2026', validUntil: 'Apr 16, 2026', status: 'rejected' },
+  { quotationNumber: 'Q-0180', title: 'Brake pad replacement', vehicleReg: 'DL01 G 4422', jobCode: 'JOB-2031', totalAmount: 420000, createdAt: 'Mar 28, 2026', validUntil: 'Apr 11, 2026', status: 'approved' },
 ]
 
-const statusClass: Record<string, string> = { Pending: 's-pending', Approved: 's-approved', Rejected: 's-rejected' }
+function formatAmount(paise: number) {
+  const rupees = paise / 100
+  return '₹' + rupees.toLocaleString('en-IN')
+}
+
+const statusClass: Record<QuotationDisplayStatus, string> = {
+  pending: 's-pending', approved: 's-approved', rejected: 's-rejected', draft: 's-draft'
+}
+
+const statusLabel: Record<QuotationDisplayStatus, string> = {
+  pending: 'Pending', approved: 'Approved', rejected: 'Rejected', draft: 'Draft'
+}
+
 const filters = ['All Quotes', 'Pending', 'Approved', 'Rejected']
 
 export default function Quotations() {
   const [active, setActive] = useState('All Quotes')
 
-  const filtered = active === 'All Quotes' ? quotes : quotes.filter(q => q.status === active)
+  const filtered = active === 'All Quotes'
+    ? quotes
+    : quotes.filter(q => q.status === active.toLowerCase())
 
   return (
     <div className="content">
@@ -36,7 +64,7 @@ export default function Quotations() {
       <div className="stats-row">
         <div className="stat-card">
           <div className="stat-lbl">Pending Approval</div>
-          <div className="stat-val" style={{ color: 'var(--amber)' }}>5</div>
+          <div className="stat-val" style={{ color: 'var(--amber)' }}>3</div>
           <div className="stat-sub">₹1.24L potential</div>
         </div>
         <div className="stat-card">
@@ -67,9 +95,9 @@ export default function Quotations() {
           <thead>
             <tr>
               <th>Quote Info</th>
-              <th>Vehicle</th>
+              <th>Job · Vehicle</th>
               <th>Amount</th>
-              <th>Date Sent</th>
+              <th>Created</th>
               <th>Valid Until</th>
               <th>Status</th>
               <th style={{ textAlign: 'right' }}>Actions</th>
@@ -77,28 +105,29 @@ export default function Quotations() {
           </thead>
           <tbody>
             {filtered.map((q, i) => (
-              <tr key={q.id} style={{ animationDelay: `${i * 40}ms` }}>
+              <tr key={q.quotationNumber} style={{ animationDelay: `${i * 40}ms` }}>
                 <td>
-                  <div className="q-id">{q.id}</div>
+                  <div className="q-id">{q.quotationNumber}</div>
                   <div className="q-title-sub">{q.title}</div>
                 </td>
                 <td>
-                  <div style={{ fontFamily: 'DM Mono, monospace', fontSize: 11, background: 'var(--bg-hover)', padding: '2px 6px', borderRadius: 4, display: 'inline-block', border: '1px solid var(--border)' }}>
-                    {q.plate}
+                  <div style={{ fontSize: 11, fontFamily: 'DM Mono, monospace', color: 'var(--text-2)' }}>{q.jobCode}</div>
+                  <div style={{ fontFamily: 'DM Mono, monospace', fontSize: 11, background: 'var(--bg-hover)', padding: '2px 6px', borderRadius: 4, display: 'inline-block', border: '1px solid var(--border)', marginTop: 2 }}>
+                    {q.vehicleReg}
                   </div>
                 </td>
-                <td className="q-amt">{q.amt}</td>
-                <td style={{ fontSize: 11, color: 'var(--text-2)' }}>{q.sent}</td>
-                <td style={{ fontSize: 11, color: 'var(--text-2)' }}>{q.valid}</td>
-                <td><span className={`status-chip ${statusClass[q.status]}`}>{q.status}</span></td>
+                <td className="q-amt">{formatAmount(q.totalAmount)}</td>
+                <td style={{ fontSize: 11, color: 'var(--text-2)' }}>{q.createdAt}</td>
+                <td style={{ fontSize: 11, color: 'var(--text-2)' }}>{q.validUntil ?? '—'}</td>
+                <td><span className={`status-chip ${statusClass[q.status]}`}>{statusLabel[q.status]}</span></td>
                 <td style={{ textAlign: 'right' }}>
-                  {q.status === 'Pending' ? (
+                  {q.status === 'pending' ? (
                     <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
                       <button className="q-action ap">Approve</button>
                       <button className="q-action rj">Reject</button>
                     </div>
                   ) : (
-                    <button className="q-action">View</button>
+                    <Link to={`/quotations/${q.quotationNumber}`} className="q-action" style={{ textDecoration: 'none' }}>View</Link>
                   )}
                 </td>
               </tr>
