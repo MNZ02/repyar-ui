@@ -54,7 +54,7 @@ function SpecRow({ label, value, mono = false }: { label: string; value?: string
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 0', borderBottom: '1px solid var(--border)' }}>
       <span style={{ fontSize: 11, color: 'var(--text-3)' }}>{label}</span>
-      <span style={{ fontSize: 11, color: 'var(--text-1)', fontFamily: mono ? 'DM Mono, monospace' : 'inherit', fontWeight: 500 }}>{value ?? '—'}</span>
+      <span style={{ fontSize: 11, color: 'var(--text-1)', fontFamily: mono ? 'var(--font-mono)' : 'inherit', fontWeight: 500 }}>{value ?? '—'}</span>
     </div>
   )
 }
@@ -89,7 +89,7 @@ export default function VehicleDetail() {
           </div>
         </div>
         <div className="page-actions">
-          <span style={{ fontFamily: 'DM Mono, monospace', fontSize: 12, background: 'var(--bg-hover)', padding: '4px 10px', borderRadius: 4, border: '1px solid var(--border)' }}>{profile.registration}</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, background: 'var(--bg-hover)', padding: '4px 10px', borderRadius: 4, border: '1px solid var(--border)' }}>{profile.registration}</span>
           <span className={`status-chip ${statusClass[profile.status]}`}>{profile.status}</span>
           <button className="btn prim">Schedule Maintenance</button>
         </div>
@@ -103,7 +103,7 @@ export default function VehicleDetail() {
         <div className="stat-card"><div className="stat-lbl">Next Service</div><div className="stat-val" style={{ fontSize: 14 }}>{profile.nextServiceDue ?? '—'}</div></div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 14 }}>
+      <div className="vd-layout">
         <div>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', marginBottom: 14 }}>
@@ -142,7 +142,7 @@ export default function VehicleDetail() {
                 <div className="card" style={{ padding: 24, textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>No active jobs</div>
               )}
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div className="vd-2col">
                 {/* Open issues */}
                 <div className="card" style={{ padding: 16 }}>
                   <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 10 }}>Open Issues</div>
@@ -184,7 +184,7 @@ export default function VehicleDetail() {
                 <div className="card" style={{ padding: 16 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                     <div style={{ fontWeight: 600, fontSize: 13 }}>Health Score</div>
-                    <div style={{ fontWeight: 700, fontSize: 18, fontFamily: 'DM Mono, monospace', color: health.score >= 80 ? 'var(--green)' : health.score >= 60 ? 'var(--amber)' : 'var(--red)' }}>{health.score}<span style={{ fontSize: 11, color: 'var(--text-3)' }}>/{health.outOf}</span></div>
+                    <div style={{ fontWeight: 700, fontSize: 18, fontFamily: 'var(--font-mono)', color: health.score >= 80 ? 'var(--green)' : health.score >= 60 ? 'var(--amber)' : 'var(--red)' }}>{health.score}<span style={{ fontSize: 11, color: 'var(--text-3)' }}>/{health.outOf}</span></div>
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--text-2)', marginBottom: 12 }}>{health.note}</div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -211,7 +211,7 @@ export default function VehicleDetail() {
                   <div className="card" style={{ flex: 1, padding: 14, marginBottom: 0 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <div>
-                        <div style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'DM Mono, monospace' }}>{item.date}</div>
+                        <div style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'var(--font-mono)' }}>{item.date}</div>
                         <div style={{ fontWeight: 600, fontSize: 13, marginTop: 2 }}>{item.title}</div>
                         <div style={{ fontSize: 11, color: 'var(--text-2)', marginTop: 2 }}>{item.details}</div>
                       </div>
@@ -224,7 +224,7 @@ export default function VehicleDetail() {
           )}
 
           {tab === 'compliance' && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="vd-2col">
               <div className="card" style={{ padding: 16 }}>
                 <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 12 }}>Compliance Schedule</div>
                 {schedules.filter((s: any) => s.type !== 'Maintenance').map((s: any) => (
@@ -256,11 +256,11 @@ export default function VehicleDetail() {
                 <tbody>
                   {recentQuotations.map((q: any) => (
                     <tr key={q.id}>
-                      <td><div style={{ fontFamily: 'DM Mono, monospace', fontSize: 12, fontWeight: 600 }}>{q.number}</div></td>
+                      <td><div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600 }}>{q.number}</div></td>
                       <td><span className={`status-chip ${quoteStatusClass[q.status]}`}>{q.status}</span></td>
                       <td style={{ fontWeight: 600 }}>{q.amount}</td>
-                      <td style={{ fontSize: 11, color: 'var(--text-2)', fontFamily: 'DM Mono, monospace' }}>{q.date}</td>
-                      <td style={{ fontSize: 11, color: 'var(--text-2)', fontFamily: 'DM Mono, monospace' }}>{q.validUntil ?? '—'}</td>
+                      <td style={{ fontSize: 11, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{q.date}</td>
+                      <td style={{ fontSize: 11, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{q.validUntil ?? '—'}</td>
                       <td style={{ textAlign: 'right', fontSize: 11, color: 'var(--text-2)' }}>{q.lineItemCount}</td>
                     </tr>
                   ))}

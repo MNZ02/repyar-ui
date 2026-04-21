@@ -7,13 +7,13 @@ interface ThemeCtx {
   toggleTheme: () => void
 }
 
-const ThemeContext = createContext<ThemeCtx>({ theme: 'dark', toggleTheme: () => {} })
+const ThemeContext = createContext<ThemeCtx>({ theme: 'light', toggleTheme: () => {} })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('repyar-theme')
     if (saved === 'light' || saved === 'dark') return saved
-    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+    return 'light'
   })
 
   useEffect(() => {

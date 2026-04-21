@@ -48,6 +48,29 @@ const navAnalytics = [
   },
 ]
 
+const bottomNavItems = [
+  {
+    to: '/dashboard', label: 'Dashboard',
+    icon: <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1"/></svg>
+  },
+  {
+    to: '/fleet', label: 'Fleet',
+    icon: <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><ellipse cx="7" cy="4" rx="4" ry="2.5"/><path d="M3 4v6c0 1.4 1.8 2.5 4 2.5s4-1.1 4-2.5V4"/></svg>
+  },
+  {
+    to: '/jobs', label: 'Jobs',
+    icon: <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 2.5h12M1 7h8M1 11.5h5"/></svg>
+  },
+  {
+    to: '/quotations', label: 'Quotes',
+    icon: <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="11" height="11" rx="2"/><path d="M4.5 7h5M4.5 9.5h3"/></svg>
+  },
+  {
+    to: '/settings', label: 'Settings',
+    icon: <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7" cy="7" r="2"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2M2.9 2.9l1.4 1.4M9.7 9.7l1.4 1.4M2.9 11.1l1.4-1.4M9.7 4.3l1.4-1.4"/></svg>
+  },
+]
+
 const pageTitle: Record<string, { title: string; sub: string }> = {
   '/dashboard': { title: 'Dashboard', sub: 'April 20, 2026' },
   '/fleet': { title: 'Vehicles', sub: 'Manage your fleet' },
@@ -78,7 +101,7 @@ export default function Layout() {
           <span className="nav-lbl">Main</span>
           {navMain.map(({ to, label, icon }) => (
             <NavLink key={to} to={to} className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
-              {icon}{label}
+              {icon}<span className="nav-label">{label}</span>
             </NavLink>
           ))}
         </div>
@@ -87,7 +110,7 @@ export default function Layout() {
           <span className="nav-lbl">Analytics</span>
           {navAnalytics.map(({ to, label, icon, badge }) => (
             <NavLink key={to} to={to} className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
-              {icon}{label}
+              {icon}<span className="nav-label">{label}</span>
               {badge && <span className="nav-badge">{badge}</span>}
             </NavLink>
           ))}
@@ -97,18 +120,18 @@ export default function Layout() {
           <div className="nav-section">
             <NavLink to="/settings" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
               <svg className="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7" cy="7" r="2"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2M2.9 2.9l1.4 1.4M9.7 9.7l1.4 1.4M2.9 11.1l1.4-1.4M9.7 4.3l1.4-1.4"/></svg>
-              Settings
+              <span className="nav-label">Settings</span>
             </NavLink>
             <NavLink to="/support" className="nav-item">
               <svg className="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7" cy="5" r="2.5"/><path d="M2 12c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg>
-              Support
+              <span className="nav-label">Support</span>
             </NavLink>
           </div>
         </div>
 
         <div className="sidebar-foot">
           <div className="u-avatar">MN</div>
-          <div>
+          <div className="sidebar-foot-text">
             <div className="u-name">mnz</div>
             <div className="u-role">admin</div>
           </div>
@@ -146,6 +169,15 @@ export default function Layout() {
 
         <Outlet />
       </div>
+
+      <nav className="bottom-nav">
+        {bottomNavItems.map(({ to, label, icon }) => (
+          <NavLink key={to} to={to} className={({ isActive }) => `bn-item${isActive ? ' active' : ''}`}>
+            {icon}
+            <span>{label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   )
 }
